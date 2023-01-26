@@ -238,11 +238,6 @@ Adresse de l'image Dockerhub :
 Répondez aux questions du fichier `tp.md`
 
 ```
-Nom :
-Prénom :
-Classe :
-Date :
-
 Nom : Varoso Gomes
 Prénom : David Manuel
 Classe : SI-T1b
