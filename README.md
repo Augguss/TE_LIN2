@@ -131,6 +131,50 @@ Vous devrez faire un fork du dépôt `Github` afin de récupérer les deux appli
 └── readme.md
 └── tp.md
 ```
+### Dockerfile server
+
+```
+FROM python:3.11
+WORKDIR /usr/src/app
+COPY ./socket_server.py .
+EXPOSE 5000
+CMD [ "python", "./socket_server.py" ]
+```
+
+### Dockerfile client
+
+```
+FROM python:3.11
+WORKDIR /usr/src/app
+COPY ./socket_client.py .
+CMD [ "python", "./socket_server.py" ]
+```
+
+### Docker Compose
+
+```
+version: '3'
+services:
+  server:
+    build:
+      context: ./api-server/
+      dockerfile: Dockerfile
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+  client:
+    build:
+      context: ./api-client/
+      dockerfile: Dockerfile
+    container_name: client
+    restart: unless-stopped
+    depends_on:
+      - "server"
+```
+
+
+
 ## Partie 2
 
 Vous devrez ensuite publier vos images sur un compte `Dockerhub` que vous aurez préalablement créées. La version fonctionnelle doit être taguée en `latest`. L'adresse des images sur le `Dockerhub` devra figurer dans un champ `LABEL` de chaque Dockerfile, ayant pour valeur `hub_url`.
@@ -155,6 +199,29 @@ Un fichier `docker-compose-2.yaml` sera créé pour le déploiement des deux app
 └── readme.md
 └── tp.md
 ```
+
+### Docker compose 2
+
+```
+version: '3'
+services:
+  server:
+    build:
+      image: auggus/tedockerv1-server:v0.1
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+  client:
+    build:
+      image: auggus/tedockerv1-client:v0.1
+    container_name: client
+    restart: unless-stopped
+    depends_on:
+      - "server"
+```
+
+
 
 # 5. Evaluation
 

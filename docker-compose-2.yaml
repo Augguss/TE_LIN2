@@ -1,0 +1,16 @@
+version: '3'
+services:
+  server:
+    build:
+      image: auggus/tedockerv1-server:v0.1
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+  client:
+    build:
+      image: auggus/tedockerv1-client:v0.1
+    container_name: client
+    restart: unless-stopped
+    depends_on:
+      - "server"
